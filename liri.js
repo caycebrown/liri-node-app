@@ -1,4 +1,4 @@
-require("dotenv").config();
+require('dotenv').config();
 
 var keys = require('./keys');
 
@@ -8,17 +8,47 @@ var moment = require('moment');
 
 var axios = require('axios');
 
+var inquirer = require('inquirer');
 
 
+inquirer
+  .prompt([
+    {
+      type: "list",
+      message: "Hello I am Liri, what can I do for you?",
+      choices: ["Look Up A Song By Name", "Look Up a Movie By Title", "Search For Upcoming Shows By Artist Name"],
+      name: "initialize"
+    }
+  ]).then(response => {
+    console.log(response.initialize);
+    if (response.initialize === "Look Up A Song By Name"){
+      spotifyThis();
+    }else if (response.initialize === "Look Up a Movie By Title"){
+      movieThis();
+    }else if (response.initialize === "Search For Upcoming Shows By Artist Name"){
+      concertThis();
+    }
+  });
 
 //===================================================================================================
 //Spotify API funtion
 //===================================================================================================
 function spotifyThis(){
 
+  inquirer
+    prompt([
+      {
+        type: "input",
+        message: "Enter the name of the song you would like to search for",
+        name: "song"
+      }
+    ]).then(response => {
+      song = response.song;
+    });
+
   var spotify = new Spotify(keys.spotify);
 
-  spotify.search({ type: 'track', query: process.argv[2], limit: 1 }, function(err, data) {
+  spotify.search({ type: 'track', query: song, limit: 1 }, function(err, data) {
       if (err) return console.log('Error occurred: ' + err);
     console.log('\nAlbum: ' + data.tracks.items[0].album.name);
     console.log('Artist: ' + data.tracks.items[0].artists[0].name);
