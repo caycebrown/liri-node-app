@@ -20,7 +20,6 @@ inquirer
       name: "initialize"
     }
   ]).then(response => {
-    console.log(response.initialize);
     if (response.initialize === "Look Up A Song By Name"){
       spotifyThis();
     }else if (response.initialize === "Look Up a Movie By Title"){
@@ -35,27 +34,30 @@ inquirer
 //===================================================================================================
 function spotifyThis(){
 
+try{
   inquirer
-    prompt([
+    .prompt([
       {
         type: "input",
         message: "Enter the name of the song you would like to search for",
         name: "song"
       }
     ]).then(response => {
-      song = response.song;
+      
+      var song = response.song;
+      
+      var spotify = new Spotify(keys.spotify);
+
+      spotify.search({ type: 'track', query: song, limit: 1 }, function(err, data) {
+          if (err) return console.log('Error occurred: ' + err);
+        console.log('\nAlbum: ' + data.tracks.items[0].album.name);
+        console.log('Artist: ' + data.tracks.items[0].artists[0].name);
+        console.log('Track Name: ' + data.tracks.items[0].name);
+        console.log('Preview Link: ' + data.tracks.items[0].preview_url);
+        });
     });
 
-  var spotify = new Spotify(keys.spotify);
-
-  spotify.search({ type: 'track', query: song, limit: 1 }, function(err, data) {
-      if (err) return console.log('Error occurred: ' + err);
-    console.log('\nAlbum: ' + data.tracks.items[0].album.name);
-    console.log('Artist: ' + data.tracks.items[0].artists[0].name);
-    console.log('Track Name: ' + data.tracks.items[0].name);
-    console.log('Preview Link: ' + data.tracks.items[0].preview_url);
-    });
-
+}catch(err){console.log(err)};
 };
 
 
