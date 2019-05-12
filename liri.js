@@ -133,9 +133,11 @@ try{
           //Function for making upcoming concert info blocks
           function makeData(response){
 
+            var time = moment(response.datetime).format('MM DD YYYY');
+            
             console.log('\n'+ response.venue.name);
             console.log(response.venue.city + ', ' + response.venue.country);
-            console.log(response.datetime);
+            console.log(time);
 
           }
           //looping through all concert objects and passing them into the function above
