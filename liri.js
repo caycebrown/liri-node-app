@@ -10,13 +10,15 @@ var axios = require('axios');
 
 var inquirer = require('inquirer');
 
+var fs = require('fs');
+
 
 inquirer
   .prompt([
     {
       type: "list",
       message: "Hello I am Liri, what can I do for you?",
-      choices: ["Look Up A Song By Name", "Look Up a Movie By Title", "Search For Upcoming Shows By Artist Name"],
+      choices: ["Look Up A Song By Name", "Look Up a Movie By Title", "Search For Upcoming Shows By Artist Name", "Do What It Says"],
       name: "initialize"
     }
   ]).then(response => {
@@ -26,6 +28,8 @@ inquirer
       movieThis();
     }else if (response.initialize === "Search For Upcoming Shows By Artist Name"){
       concertThis();
+    }else if (response.initialize === "Do What It Says"){
+      doWhatItSays();
     }
   });
 
@@ -134,7 +138,7 @@ try{
           function makeData(response){
 
             var time = moment(response.datetime).format('MM DD YYYY');
-            
+
             console.log('\n'+ response.venue.name);
             console.log(response.venue.city + ', ' + response.venue.country);
             console.log(time);
@@ -148,3 +152,27 @@ try{
 
 }catch(error){console.log('There was an error3: ' + error)}
 };
+
+//===================================================================================================
+//Do What Is Says Function
+//===================================================================================================
+function doWhatItSays(){
+   
+  var song = fs.readFileSync('random.txt', 'utf8');
+
+  var spotify = new Spotify(keys.spotify);
+
+  try{
+    spotify.search({ type: 'track', query: song, limit: 1 }, function(err, data) {
+      if (err) return console.log('Error occurred: ' + err);
+    
+      console.log('\nYour Requested Data');
+      console.log('==================================================')
+      console.log('\nAlbum: ' + data.tracks.items[0].album.name);
+      console.log('Artist: ' + data.tracks.items[0].artists[0].name);
+      console.log('Track Name: ' + data.tracks.items[0].name);
+      console.log('Preview Link: ' + data.tracks.items[0].preview_url);
+      });
+  }catch(error){console.log('There was an error4: ' + error)}
+  };
+  
