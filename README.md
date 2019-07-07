@@ -5,13 +5,13 @@ A basic CLI-application that uses axios to make requests to various API's depend
 
 ### Requirements
 
-* Node
+* Node --> [Get Node](https://nodejs.org/en/)
 * Spotify developer account with personal Spotify keys - (free) 
 
 
 ### Installation/Setup
 
-To begin you will need to clone a copy of this repository. [(How-to clone a repository)](https://help.github.com/en/articles/cloning-a-repository)
+To begin you will need to fork your own copy of this repository. [(How-to fork a repository)](https://help.github.com/en/articles/fork-a-repo)
 
 If you don't already have a Spotify developer account you will need to make one to obtain the needed Spotify credentials for this app.
 Simply go here --> [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/), and then login using your Spotify account. 
@@ -27,8 +27,8 @@ Inside the .env file you will need to add the following:
 SPOTIFY_ID=paste-your-spotify-id-here
 SPOTIFY_SECRET=paste-your-spotify-secret-here
 ```
-Next you will need to start your preferred terminal and run the command `npm install`, for this to work you will need to have Node installed. 
-If you don't already, you can find it here --> [Node Homepage](https://nodejs.org/en/).
+Next you will need to start your preferred terminal and navigate to the folder where your forked project resides. Once there, run the command `npm install`, for this to work you will need to have Node installed. 
+If you don't already, once more, you can find it here --> [Node Homepage](https://nodejs.org/en/).
 
 When npm is done installing all dependencies you will need to then run the command `node liri.js`.
 
